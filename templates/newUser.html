@@ -14,7 +14,7 @@
 <body>
 <div ng-app="rouletteApp">
 
-<div ng-controller="newUser" ng-init="token='{{session['github_token'][0]}}'; github_user='{{session['github_user']}}'">
+<div ng-controller="newUser" ng-init="github_user='{{session['github_user']}}'">
 <div ng-init="getUserSkills(github_user)"/>
 <center>
 <form class="form-inline" ng-submit="addUserSkills()" method="post">
