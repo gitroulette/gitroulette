@@ -15,9 +15,9 @@ api = Blueprint('api', __name__)
 db = models.db
 
 
-@api.route('/add_for_review', methods=['POST'])
+@api.route('/new_for_review', methods=['POST'])
 @auth.login_required
-def add_for_review():
+def new_for_review():
     if request.method == 'POST':
         req_data = json.loads(request.data)
         # FIXME: fix
@@ -55,9 +55,9 @@ def remove_from_queue():
     return "test"
 
 
-@api.route('/add_something', methods=['POST'])
+@api.route('/new_something', methods=['POST'])
 @auth.login_required
-def add_something():
+def new_something():
     if request.method == 'POST':
         req_data = json.loads(request.data)
 
@@ -82,9 +82,9 @@ def add_something():
     return "test"
 
 
-@api.route('/get_something_by_url/<url_id>', methods=['GET'])
+@api.route('/something_by_url_id/<url_id>', methods=['GET'])
 @auth.login_required
-def get_something_by_url(url_id):
+def something_by_url_id(url_id):
     # TODO: maybe we need this for something
     url = models.Url.query.filter_by(id=url_id).first()
     s = url.somethings.all()
@@ -92,9 +92,9 @@ def get_something_by_url(url_id):
     return "text"
 
 
-@api.route('/get_url_languages/<url_id>', methods=['GET'])
+@api.route('/languages_by_url_id/<url_id>', methods=['GET'])
 @auth.login_required
-def get_url_languages(url_id):
+def languages_by_url_id(url_id):
     url = models.Url.query.filter_by(id=url_id).first()
     languages = url.languages.all()
 
@@ -105,9 +105,9 @@ def get_url_languages(url_id):
     return json.dumps(ret_val)
 
 
-@api.route('/add_new_user', methods=['POST'])
+@api.route('/new_github_user', methods=['POST'])
 @auth.login_required
-def add_new_user():
+def new_github_user():
     # TODO: modify so that a user can add/remove/replace skills;
     # TODO: case: no skills on github..
     # TODO: add a dropdown with common skills.
@@ -127,9 +127,9 @@ def add_new_user():
             return "success"
 
 
-@api.route('/get_url_comments/<url_id>')
+@api.route('/comments_by_url_id/<url_id>')
 @auth.login_required
-def get_url_comments(url_id):
+def comments_by_url_id(url_id):
     # FIXME: at the moment we only take pulls comments, no issues.
     # issues will show comments in "conversation" too.
     # Should we do another request if entry_type is pull?
@@ -179,9 +179,9 @@ def decline_comment():
     return json.dumps({"response": resp.data})
 
 
-@api.route('/get_newuser_skills/<github_user>')
+@api.route('/skills_by_username/<github_user>', methods=['GET'])
 @auth.login_required
-def get_newuser_skills(github_user):
+def skills_by_username(github_user):
     endpoint = "/users/" + github_user + "/repos"
     repos = auth.github.get(endpoint).data
     languages = [language for repo in repos for language in

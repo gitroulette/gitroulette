@@ -42,7 +42,7 @@ def index():
     return render_template("index.html", existing=json.dumps(existing_urls))
 
 
-@web.route('/new_user', methods=['GET', 'POST'])
+@web.route('/new_user', methods=['GET'])
 @auth.login_required
 def new_user():
     return render_template("newUser.html")

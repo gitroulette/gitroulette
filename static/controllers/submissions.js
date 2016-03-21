@@ -48,7 +48,7 @@ app.controller('submissions', ['$scope', '$http', '$rootScope', 'globalHelpers',
         
         $http({
             method: "post",
-            url: "/add_for_review",
+            url: "/new_for_review",
             headers: {'Content-Type': "application/json"},
             data: obj
         }).success(function () {

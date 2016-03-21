@@ -17,7 +17,7 @@ app.controller('reviewsReceived', ['$scope', '$http', 'globalHelpers', function 
 
             $http({
                 method: "get",
-                url: "/get_url_comments/" + element["id"],
+                url: "/comments_by_url_id/" + element["id"],
                 headers: {'Accept': 'application/json',
                           'Content-Type': "application/json"},
             }).success(function (response) {
@@ -31,11 +31,11 @@ app.controller('reviewsReceived', ['$scope', '$http', 'globalHelpers', function 
         });
     };
 
-    $scope.add_something = function (github_user, comment_id){
+    $scope.new_something = function (github_user, comment_id){
         var obj = JSON.parse('{"github_user": "' + github_user  + '", "comment_id": "' + comment_id + '"}');
         $http({
             method: "post",
-            url: "/add_something",
+            url: "/new_something",
             headers: {'Accept': 'application/json',
                       'Content-Type': "application/json"},
             data: obj

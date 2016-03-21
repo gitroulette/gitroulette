@@ -16,7 +16,7 @@ app.factory('globalHelpers', ['$http', function($http) { my = {
     getUrlLanguagesPromise : function(gitUrlId){
         var promise = $http({
             method: "get",
-            url: "/get_url_languages/" + gitUrlId,
+            url: "/languages_by_url_id/" + gitUrlId,
             headers: {'Accept': 'application/json',
                       'Content-Type': "application/json"},
         })

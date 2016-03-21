@@ -13,7 +13,7 @@ app.controller('newUser', ['$scope', '$http', 'globalHelpers', '$window', functi
         }
         $http({
             method: "post",
-            url: "/add_new_user",
+            url: "/new_github_user",
             headers: {'Content-Type': "application/json"},
             data: $scope.user
         }).success(function () {
@@ -25,7 +25,7 @@ app.controller('newUser', ['$scope', '$http', 'globalHelpers', '$window', functi
     $scope.getUserSkills = function(github_user){
         $http({
             method: "get",
-            url: "/get_newuser_skills/" + github_user,
+            url: "/skills_by_username/" + github_user,
             headers: {'Accept': 'application/json',
                       'Content-Type': "application/json"},
         }).then(function (response) {
