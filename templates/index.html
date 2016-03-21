@@ -10,6 +10,7 @@
     <script src= "{{ url_for('static', filename='helpers/factory.js') }}"></script>
     <script src= "{{ url_for('static', filename='controllers/submissions.js') }}"></script>
     <script src= "{{ url_for('static', filename='controllers/reviewsReceived.js') }}"></script>
+    <script src= "{{ url_for('static', filename='controllers/reviewsMade.js') }}"></script>
 </head>
 
 <body ng-app="rouletteApp" ng-init="existing={{existing}}; github_user='{{session['github_user']}}'">
@@ -92,11 +93,10 @@
     </div>
 </div>
 
-<div id="made" ng-show="menuButton=='made'">
+<div id="made" ng-show="menuButton=='made'" ng-controller="reviewsMade" ng-init="getSomethings(github_user)">
     <div class="container col-md-9">
-        You have this many somethings: 
+        You have this many somethings: {[somethings.length]}
     </div>
-
 </div>
 </body>
 </html>

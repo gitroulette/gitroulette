@@ -64,7 +64,7 @@ def new_something():
         github_user = models.GitUser.query.filter_by(
             github_user=req_data['github_user']).first()
 
-        if github_user is not None:
+        if github_user is None:
             return "no user"
         # checks if user is trying to add to himself
         elif req_data['github_user'] == session['github_user']:
@@ -82,14 +82,22 @@ def new_something():
     return "test"
 
 
-@api.route('/something_by_url_id/<url_id>', methods=['GET'])
+@api.route('/somethings_by_url_id/<url_id>', methods=['GET'])
 @auth.login_required
-def something_by_url_id(url_id):
+def somethings_by_url_id(url_id):
     # TODO: maybe we need this for something
     url = models.Url.query.filter_by(id=url_id).first()
-    s = url.somethings.all()
-    log(s)
-    return "text"
+    somethings = [s.comment_id for s in url.somethings.all()]
+    return json.dumps({"somethings": somethings})
+
+
+@api.route('/somethings_by_username/<username>', methods=['GET'])
+@auth.login_required
+def somethings_by_username(username):
+    github_user = models.GitUser.query.filter_by(github_user=username).first()
+    somethings = [s.comment_id for s in github_user.somethings.all()]
+    print(somethings)
+    return json.dumps({"somethings": somethings})
 
 
 @api.route('/languages_by_url_id/<url_id>', methods=['GET'])
