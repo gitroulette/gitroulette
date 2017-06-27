@@ -7,9 +7,8 @@ app.controller('reviewsMade', ['$scope', '$http', 'globalHelpers', function ($sc
             url: "/somethings_by_username/" + github_user,
             headers: {'Accept': 'application/json',
                       'Content-Type': "application/json"},
-        }).success(function (response) {
-            $scope.somethings = response.somethings;
-            console.log(response);
+        }).then(function (response) {
+            $scope.somethings = response.data["somethings"];
         });
     };
 

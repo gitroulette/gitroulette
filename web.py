@@ -30,6 +30,10 @@ def logout():
 @web.route('/', methods=['GET'])
 @auth.login_required
 def index():
+    # TODO: 1) render html here, just like in the other web endpoints.
+    #       2) add an api endpoint to GET url_by_user
+    #       3) add an api call in index.html to GET url_by_user
+    #       4) add button to refresh this data like the others
     urls = models.Url.query.filter_by(github_user=session['github_user']).all()
     existing_urls = []
     for url in urls:

@@ -20,12 +20,12 @@ app.controller('reviewsReceived', ['$scope', '$http', 'globalHelpers', function 
                 url: "/comments_by_url_id/" + element["id"],
                 headers: {'Accept': 'application/json',
                           'Content-Type': "application/json"},
-            }).success(function (response) {
+            }).then(function (response) {
                 var c = [];
                 if(Object.keys($scope.comments).indexOf(project) < 0){
-                    $scope.comments[project] = response[project]; 
+                    $scope.comments[project] = response.data[project]; 
                 } else {
-                    $scope.comments[project] = $scope.comments[project].concat(response[project]); 
+                    $scope.comments[project] = $scope.comments[project].concat(response.data[project]); 
                 }
             });
         });
@@ -39,7 +39,7 @@ app.controller('reviewsReceived', ['$scope', '$http', 'globalHelpers', function 
             headers: {'Accept': 'application/json',
                       'Content-Type': "application/json"},
             data: obj
-        }).success(function (response) {
+        }).then(function (response) {
             // console.log(response);
         });
     }
@@ -52,7 +52,7 @@ app.controller('reviewsReceived', ['$scope', '$http', 'globalHelpers', function 
             data: obj,
             headers: {'Accept': 'application/json',
                       'Content-Type': "application/json"},
-        }).success(function (response) {
+        }).then(function (response) {
             // console.log(response);
         });
     }

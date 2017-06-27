@@ -16,7 +16,7 @@ app.controller('newUser', ['$scope', '$http', 'globalHelpers', '$window', functi
             url: "/new_github_user",
             headers: {'Content-Type': "application/json"},
             data: $scope.user
-        }).success(function () {
+        }).then(function (response) {
             $window.location.href = '/';
             console.log("success!");
         });

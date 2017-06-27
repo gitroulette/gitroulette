@@ -1,3 +1,6 @@
 *.pyc
 *.swap
 *.swp
+.vscode
+__pycache__
+.DS_Store

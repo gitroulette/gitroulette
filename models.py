@@ -31,7 +31,7 @@ class Language(db.Model):
     __tablename__ = 'language'
 
     id = db.Column(db.Integer, primary_key=True)
-    language = db.Column(db.String(15))
+    language = db.Column(db.String(30))
     url_id = db.Column(db.Integer, db.ForeignKey('url.id'))
 
 
@@ -61,7 +61,7 @@ class Skill(db.Model):
     __tablename__ = 'skill'
 
     id = db.Column(db.Integer, primary_key=True)
-    skill = db.Column(db.String(15))
+    skill = db.Column(db.String(30))
     person_id = db.Column(db.Integer, db.ForeignKey('gituser.id'))
 
 

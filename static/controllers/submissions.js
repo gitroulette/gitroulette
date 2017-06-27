@@ -41,18 +41,17 @@ app.controller('submissions', ['$scope', '$http', '$rootScope', 'globalHelpers',
         for (var i=0; i < $scope.existing.length; i++){
             if (Object.keys($scope.existing[i])[0] == _new){
                 return;
-                }
             }
-        
-        $scope.existing.push(obj);
+        }
         
         $http({
             method: "post",
             url: "/new_for_review",
             headers: {'Content-Type': "application/json"},
             data: obj
-        }).success(function () {
-            // console.log("success!");
+        }).then(function (response) {
+            obj["id"] = response.data
+            $scope.existing.push(obj);
         });
         $scope.showUWarning = false;
         $scope.showGithubWarning = false;
@@ -66,15 +65,15 @@ app.controller('submissions', ['$scope', '$http', '$rootScope', 'globalHelpers',
                 if ($scope.existing[i]["url"] == url['url']){
                     $scope.existing.splice(i, 1)
 
-                $http({
-                    method: "post",
-                    url: "/remove_from_list",
-                    headers: {'Content-Type': "application/json"},
-                    data: url
-                }).success(function () {
-                    console.log("success!");
-                });
-                $rootScope.$broadcast('urlEntryChange', 'args');
+                    $http({
+                        method: "post",
+                        url: "/remove_from_list",
+                        headers: {'Content-Type': "application/json"},
+                        data: url
+                    }).then(function (response) {
+                        console.log("success!");
+                    });
+                    $rootScope.$broadcast('urlEntryChange', 'args');
                 }
             }
         }

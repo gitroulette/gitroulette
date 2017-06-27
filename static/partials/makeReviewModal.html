@@ -1,0 +1,13 @@
+<!--<div ng-controller="ModalInstanceCtrl as $ctrl" class="modal-demo">-->
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Based on your skills, have this random url for review:</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+            <a href="{[$ctrl.urlToReview]}">{[$ctrl.urlToReview]}</a>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+    </div>
+</div>

@@ -1,10 +1,13 @@
 import json
+import random
 
 from flask import Blueprint
 from flask import request
 from flask import session
 from sqlalchemy import and_
+from sqlalchemy import or_
 from urlparse import urlparse
+# from flask import current_app
 
 from gitRoulette import auth
 from gitRoulette import models
@@ -20,7 +23,7 @@ db = models.db
 def new_for_review():
     if request.method == 'POST':
         req_data = json.loads(request.data)
-        # FIXME: fix
+
         language_list = request_utils.get_url_languages(
             req_data['url'], session['github_token'][0]).keys()
 
@@ -36,7 +39,7 @@ def new_for_review():
         db.session.add(entry)
         db.session.commit()
 
-    return "OK"
+    return str(entry.id)
 
 
 @api.route('/remove_from_list', methods=['POST'])
@@ -198,3 +201,35 @@ def skills_by_username(github_user):
     print(languages)
 
     return json.dumps(list(set(languages)))
+
+
+@api.route('/saved_skills_by_username/<github_user>', methods=['GET'])
+@auth.login_required
+def saved_skills_by_username(github_user):
+
+    user = models.GitUser.query.filter_by(github_user=github_user).first()
+    skills = user.skills.all()
+    skills_list = [s.skill for s in skills]
+
+    return json.dumps(list(set(skills_list)))
+
+
+@api.route('/url_to_review', methods=['GET'])
+@auth.login_required
+def url_to_review():
+
+    user = models.GitUser.query.filter_by(github_user=session['github_user']).first()
+    skills = user.skills.all()
+
+    # We need to have atleast one condition otherwise the query will return all.
+    if len(skills) == 0:
+        return ''
+
+    conditions = [getattr(models.Language, 'language').ilike('%{}%'.format(s.skill)) for s in skills]
+
+    q = models.Language.query.filter(or_(*conditions)).distinct(models.Language.url_id)
+    language_entries = q.all()
+    random_url_id = random.choice(language_entries).url_id
+    url = models.Url.query.filter_by(id=random_url_id).first()
+
+    return str(url.url)

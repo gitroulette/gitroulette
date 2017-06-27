@@ -12,7 +12,7 @@ from gitRoulette.api import api
 from gitRoulette.web import web
 
 
-POSTGRES_HOST = 'localhost'
+POSTGRES_HOST = 'postgres:Passw0rd@localhost'
 
 app = Flask(__name__)
 app.register_blueprint(api)

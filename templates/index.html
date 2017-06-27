@@ -2,15 +2,18 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src= "//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src= "{{ url_for('static', filename='dependencies/checklist-model.js') }}"></script>
+
     <script src= "{{ url_for('static', filename='rouletteApp.js') }}"></script>
     <script src= "{{ url_for('static', filename='helpers/factory.js') }}"></script>
     <script src= "{{ url_for('static', filename='controllers/submissions.js') }}"></script>
     <script src= "{{ url_for('static', filename='controllers/reviewsReceived.js') }}"></script>
     <script src= "{{ url_for('static', filename='controllers/reviewsMade.js') }}"></script>
+    <script src= "{{ url_for('static', filename='controllers/makeReview.js') }}"></script>
 </head>
 
 <body ng-app="rouletteApp" ng-init="existing={{existing}}; github_user='{{session['github_user']}}'">
@@ -21,6 +24,9 @@
     <a class="list-group-item" ng-class="{active: menuButton == 'submissions'}" href="" ng-click="menuButton='submissions'">Submisions</a></li>
     <a class="list-group-item" ng-class="{active: menuButton == 'received'}" href="" ng-click="menuButton='received'">Reviews received</a></li>
     <a class="list-group-item" ng-class="{active: menuButton == 'made'}" href="" ng-click="menuButton='made'">Reviews made</a></li>
+    <div class="container row" ng-controller="makeReview"> 
+        <button class="btn-sm btn-primary" ng-click="getUrlToReview('{{ url_for('static', filename='partials/makeReviewModal.html') }}')">Review Submision</button>
+    </div>
 </div>
 <br>
 
@@ -55,9 +61,8 @@
                 <td class="col-md-2">{[url.name]} :</td> 
                 <td class="col-md-6"><a>{[url.url]}</a></td>
                 <td ng-init="getUrlLanguages(url.id)"> 
-                    <option ng-repeat="value in stats[url.id]"> {[value]} </option> 
+                    <li ng-repeat="value in stats[url.id]"> {[value]} </li> 
                 </td>
-
                 <td class="col-md-2"><button class="btn btn-danger btn-sm col-sm-offset-2 glyphicon glyphicon-remove" ng-click="removeUrl(url)" ></button></td>
             </tr>
         </table>
@@ -94,9 +99,10 @@
 </div>
 
 <div id="made" ng-show="menuButton=='made'" ng-controller="reviewsMade" ng-init="getSomethings(github_user)">
-    <div class="container col-md-9">
+    <div class="container col-md-9 row">
         You have this many somethings: {[somethings.length]}
     </div>
+    <button class="btn-sm btn-primary row" ng-click="getSomethings(github_user)">Reload Data</button>
 </div>
 </body>
 </html>

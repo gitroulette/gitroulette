@@ -1,0 +1,1 @@
+docker run --name some-postgres -p 5432:5432 -v pgdata:/var/lib/postgresql/data/pgdata -e POSTGRES_PASSWORD=Passw0rd -e POSTGRES_DB=mainAPP -e POSTGRES_USER=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -d postgres:9.6-alpine
