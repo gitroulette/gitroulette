@@ -16,7 +16,7 @@
     <script src= "{{ url_for('static', filename='controllers/makeReview.js') }}"></script>
 </head>
 
-<body ng-app="rouletteApp" ng-init="existing={{existing}}; github_user='{{session['github_user']}}'">
+<body ng-app="rouletteApp" ng-init="github_user='{{session['github_user']}}'">
 <br>
 
 <div class="col-md-2 navbar-inner" ng-init="menuButton = 'submissions'" >
@@ -30,7 +30,7 @@
 </div>
 <br>
 
-<div id="submissions" ng-show="menuButton=='submissions'" ng-controller="submissions" class"col-centered">
+<div id="submissions" ng-show="menuButton=='submissions'" ng-controller="submissions" ng-init="getUserUrls(github_user)" class"col-centered">
     <div class="col-md-offset-3">
         <form class="form-inline" id="todo-form" ng-submit="addForReview()" method="post">
             <div class="form-group">
@@ -57,7 +57,7 @@
                 <th>Project stats</td>
                 <td></td>
             </tr>
-            <tr ng-repeat="url in existing">
+            <tr ng-repeat="url in existingUrls">
                 <td class="col-md-2">{[url.name]} :</td> 
                 <td class="col-md-6"><a>{[url.url]}</a></td>
                 <td ng-init="getUrlLanguages(url.id)"> 
@@ -69,7 +69,7 @@
     </div>
 </div >
 
-<div id="received" ng-show="menuButton=='received'" ng-controller="reviewsReceived" ng-init="getEntryComment()">
+<div id="received" ng-show="menuButton=='received'" ng-controller="reviewsReceived">
     <div class="container col-md-9">
         <table class="table table-striped" ng-repeat="(project, values) in comments">
             <th class="col-md-3"></th>

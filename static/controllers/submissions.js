@@ -1,4 +1,4 @@
-app.controller('submissions', ['$scope', '$http', '$rootScope', 'globalHelpers', function ($scope, $http, $rootScope, globalHelpers) {
+app.controller('submissions', ['$scope', '$http', '$rootScope', 'globalHelpers', 'ExistingUrls', function ($scope, $http, $rootScope, globalHelpers, ExistingUrls) {
     $scope.stats = {};
 
     $scope.getUrlLanguages = function(gitUrlId){
@@ -6,6 +6,18 @@ app.controller('submissions', ['$scope', '$http', '$rootScope', 'globalHelpers',
              $scope.stats[gitUrlId] = response.data.languages;
          });
     }
+
+    $scope.getUserUrls = function(github_user){
+        $http({
+            method: "get",
+            url: "/urls_by_username/" + github_user,
+            headers: {'Accept': 'application/json',
+                      'Content-Type': "application/json"},
+        }).then(function (response) {
+            ExistingUrls.urls = response.data;
+            $scope.existingUrls = ExistingUrls.urls;
+        });
+    };
 
     $scope.addForReview = function () {
         $scope.showWarning = false;

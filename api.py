@@ -214,6 +214,22 @@ def saved_skills_by_username(github_user):
     return json.dumps(list(set(skills_list)))
 
 
+@api.route('/urls_by_username/<github_user>', methods=['GET'])
+@auth.login_required
+def saved_urls_by_username(github_user):
+
+    urls = models.Url.query.filter_by(github_user=github_user).all()
+    existing_urls = []
+    for url in urls:
+        entry = {'id': url.id,
+                 'name': url.name,
+                 'url': url.url,
+                 'github_user': url.github_user}
+        existing_urls.append(entry)
+
+    return json.dumps(existing_urls)
+
+
 @api.route('/url_to_review', methods=['GET'])
 @auth.login_required
 def url_to_review():

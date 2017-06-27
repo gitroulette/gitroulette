@@ -1,9 +1,15 @@
-app.controller('reviewsReceived', ['$scope', '$http', 'globalHelpers', function ($scope, $http, globalHelpers) {
+app.controller('reviewsReceived', ['$scope', '$http', 'globalHelpers', 'ExistingUrls', function ($scope, $http, globalHelpers, ExistingUrls) {
+
+    $scope.$watch(function () { return ExistingUrls.urls }, function (newVal, oldVal) {
+        if (typeof newVal !== 'undefined') {
+            $scope.getEntryComment();
+        }
+    });
 
     $scope.getEntryComment = function(){
         $scope.comments = {};
         //FIXME: check if adding a parameter is worth doing and not get all entries.
-        $scope.existing.forEach(function(element){
+        ExistingUrls.urls.forEach(function(element){
             var _url = globalHelpers.getLocation(element["url"]);
             var pathArray = _url.pathname.split('/');
             var github_user = pathArray[1];
