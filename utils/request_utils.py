@@ -1,6 +1,5 @@
 import requests
 
-from os import path
 from urlparse import urlparse
 
 

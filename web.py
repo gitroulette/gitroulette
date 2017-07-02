@@ -1,5 +1,3 @@
-import json
-
 from flask import Blueprint
 from flask import redirect
 from flask import render_template
@@ -7,7 +5,6 @@ from flask import url_for
 from flask import session
 
 from gitRoulette import auth
-from gitRoulette import models
 
 
 web = Blueprint('web', __name__)

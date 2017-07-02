@@ -37,7 +37,7 @@ def login_required(f):
             return redirect(url_for('web.login'))
         else:
             try:
-                u = github.get('user')
+                github.get('user')
             except ValueError as e:
                 # Check the message/code to see if we have the case we want:
                 # "Missing access token."

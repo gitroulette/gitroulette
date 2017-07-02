@@ -1,5 +1,4 @@
 from flask.ext.sqlalchemy import SQLAlchemy
-from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy import text
 
 
@@ -77,6 +76,5 @@ class Something(db.Model):
     __tablename__ = 'something'
 
     id = db.Column(db.Integer, primary_key=True)
-    # url_ref = db.Column(db.Integer, db.ForeignKey('url.id'))
     comment_id = db.Column(db.String(15))
     person_id = db.Column(db.Integer, db.ForeignKey('gituser.id'))
